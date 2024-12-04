@@ -5,3 +5,5 @@ technologies used:
 - locomotive scroll
 - gsap
 - framer motion
+
+use desktop for better experience.

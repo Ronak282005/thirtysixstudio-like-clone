@@ -11,12 +11,26 @@ function App() {
   const [showCanvas, setShowCanvas] = useState(false);
   const headingref = useRef(null);
   const growingSpan = useRef(null);
+  const mousePointer = useRef(null);
 
   useEffect(() => {
     const locomotiveScroll = new LocomotiveScroll();
   }, []);
 
   useEffect(() => {
+    gsap.set(mousePointer.current, {
+      xPercent: -50,
+      yPercent: -50,
+    });
+
+    window.addEventListener("mousemove", (e) => {
+      gsap.to(mousePointer.current, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.6,
+        ease: "elastic.out(1,0.3)",
+      });
+    });
     const handleClick = (e) => {
       setShowCanvas((prevShowCanvas) => {
         if (!prevShowCanvas) {
@@ -69,6 +83,10 @@ function App() {
         ref={growingSpan}
         className="growing rounded-full block fixed top-[-20px] left-[-20px] w-5 h-5"
       ></span>
+      <div
+        ref={mousePointer}
+        className="mousePointer bg-[#fd2c2a] rounded-full fixed w-5 h-5 z-[1]"
+      ></div>
       <div className="w-full relative min-h-screen font-['Helvetica_Now_Display']">
         {showCanvas &&
           data[0].map((canvasdets, index) => <Canvas details={canvasdets} />)}
@@ -94,11 +112,11 @@ function App() {
           </nav>
           <div className="textcontainer  w-full px-[20%]">
             <div className="text w-[50%]">
-              <h3 className="text-4xl leading-[1.2]">
+              <h3 className="text-4xl leading-[1.2] cursor-default">
                 At Thirtysixstudio, we build immersive digital experiences for
                 brands with a purpose.
               </h3>
-              <p className="text-lg w-[80%] mt-10 font-normal">
+              <p className="text-lg w-[80%] mt-10 font-normal cursor-default">
                 We are a team of designers, developers, and strategists who are
                 passionate about creating digital experiences that are both
                 beautiful and functional.
@@ -109,7 +127,7 @@ function App() {
           <div className="w-full absolute bottom-0 left-0">
             <h1
               ref={headingref}
-              className="text-[15.5rem] font-normal tracking-tight leading-none"
+              className="text-[15.5rem] font-normal tracking-tight leading-none cursor-default"
             >
               Thirtysixstudios
             </h1>
